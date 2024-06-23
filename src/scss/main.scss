@@ -1,0 +1,15 @@
+@import "~bootstrap/scss/bootstrap";
+@import "_cards";
+@import "_header";
+@import "_genres";
+
+* {
+  box-sizing: border-box;
+}
+
+.main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0 60px;
+}

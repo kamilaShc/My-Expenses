@@ -1,0 +1,36 @@
+@import "_fonts-colors";
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.container {
+  margin: 0;
+}
+
+.row {
+  gap: 15px;
+}
+
+.card {
+  width: 18rem;
+
+  .cover {
+    display: flex;
+    justify-content: center;
+    height: 200px;
+  }
+
+  img {
+    max-width: 10rem;
+  }
+
+  .card-title {
+    margin: 10px 0 0;
+    color: $dark-text;
+  }
+
+  .card-text {
+    color: $grey-text;
+  }
+}

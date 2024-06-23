@@ -1,0 +1,13 @@
+@import "~bootstrap/scss/bootstrap";
+
+// Fonts
+@mixin decorative-font {
+  font-family: "Charm", cursive;
+  font-weight: 700;
+  font-style: normal;
+}
+
+// Colors
+$dark-text: var(--bs-gray-800);
+$grey-text: var(--bs-gray-500);
+$beige-color: #fceec6;
