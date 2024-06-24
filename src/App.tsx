@@ -1,37 +1,28 @@
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-} from "@tanstack/react-query";
-import "./scss/main.scss";
-import axios from "axios";
-import BooksGrid from "./components/BooksGrid";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import Header from "./components/Header";
+import BooksGrid from "./components/BooksGrid";
 import Genres from "./components/Genres";
-
-const instance = axios.create({
-  baseURL: "https://openlibrary.org/",
-});
-
-async function getBooks() {
-  try {
-    const response = await instance.get("trending/daily.json");
-    console.log(response);
-  } catch (error) {
-    console.error(error);
-  }
-}
+import Header from "./components/Header";
+import "./scss/main.scss";
+import { useState } from "react";
 
 const queryClient = new QueryClient();
 
 export const App: React.FC = () => {
+  const [query, setQuery] = useState<string>("/trending/daily.json");
+  const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
+
+  const selectGenre = (genre: string, key: string) => {
+    setQuery(`/subjects/${key}.json`);
+    setSelectedGenre(genre);
+  };
+
   return (
     <QueryClientProvider client={queryClient}>
       <Header />
       <section className="main">
-        <Genres />
-        <BooksGrid />
+        <Genres selected={selectedGenre} onSelectGenre={selectGenre} />
+        <BooksGrid query={query} />
       </section>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

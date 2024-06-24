@@ -9,15 +9,15 @@ const genres = [
   },
   {
     name: "Horror",
-    key: "art",
+    key: "horror",
   },
   {
     name: "Detectives",
-    key: "art",
+    key: "detectives",
   },
   {
     name: "Thriller",
-    key: "thriler",
+    key: "thriller",
   },
   {
     name: "Poetry",

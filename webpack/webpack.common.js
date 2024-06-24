@@ -36,6 +36,9 @@ module.exports = {
           devMode ? "style-loader" : MiniCssExtractPlugin.loader,
           {
             loader: "style-loader",
+            options: {
+              esModule: false,
+            },
           },
           {
             loader: "css-loader",

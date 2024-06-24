@@ -1,13 +1,16 @@
 import useBooks from "../hooks/useBooks";
 import BookCard from "./BookCard";
 
-const BooksGrid = () => {
-  const { data, isLoading, error } = useBooks();
-  // if (isLoading) return <p>Loading...</p>;
+interface Props {
+  query: string;
+}
+const BooksGrid = ({ query }: Props) => {
+  const { data, isLoading, error } = useBooks(query);
 
-  // if (error) return <p>{error.message}</p>;
+  if (isLoading) return <p>Loading...</p>;
 
-  console.log(data);
+  if (error) return <p>{error.message}</p>;
+
   return (
     <>
       <div className="container">

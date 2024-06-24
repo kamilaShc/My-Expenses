@@ -9,11 +9,11 @@ export interface Book {
   title: string;
 }
 
-const apiClient = new APIClient<Book>("/trending/daily.json");
+const useBooks = (query: string) => {
+  const apiClient = new APIClient<Book>(query);
 
-const useBooks = () => {
   return useQuery({
-    queryKey: ["books"],
+    queryKey: ["books", query],
     queryFn: apiClient.getAll,
     staleTime: 1000 * 60 * 60,
   });
