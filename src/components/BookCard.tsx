@@ -7,7 +7,7 @@ interface Props {
 
 const BookCard = ({ book }: Props) => {
   return (
-    <div className="card">
+    <div className="card" key={book.key}>
       <div className="card-body">
         <a className="cover">
           <img

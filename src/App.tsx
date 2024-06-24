@@ -8,6 +8,10 @@ import { useState } from "react";
 
 const queryClient = new QueryClient();
 
+export interface searchQuery {
+  q?: string;
+}
+
 export const App: React.FC = () => {
   const [query, setQuery] = useState<string>("/trending/daily.json");
   const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
@@ -22,6 +26,7 @@ export const App: React.FC = () => {
       <Header />
       <section className="main">
         <Genres selected={selectedGenre} onSelectGenre={selectGenre} />
+
         <BooksGrid query={query} />
       </section>
       <ReactQueryDevtools initialIsOpen={false} />
