@@ -9,16 +9,31 @@ import { useState } from "react";
 const queryClient = new QueryClient();
 
 export interface searchQuery {
+  baseString: string;
   q?: string;
+  subject?: string;
 }
 
 export const App: React.FC = () => {
-  const [query, setQuery] = useState<string>("/trending/daily.json");
+  const [bookQuery, setBookQuery] = useState<searchQuery>({
+    baseString: "/trending/daily.json",
+  });
   const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
 
   const selectGenre = (genre: string, key: string) => {
-    setQuery(`/subjects/${key}.json`);
+    setBookQuery({
+      baseString: "/search.json",
+      subject: key,
+    });
     setSelectedGenre(genre);
+  };
+
+  const selectYear = (year: number) => {
+    setBookQuery({
+      ...bookQuery,
+      baseString: "/search.json",
+      q: `first_publish_year:[${year} TO ${year + 1}]`,
+    });
   };
 
   return (
@@ -27,7 +42,7 @@ export const App: React.FC = () => {
       <section className="main">
         <Genres selected={selectedGenre} onSelectGenre={selectGenre} />
 
-        <BooksGrid query={query} />
+        <BooksGrid query={bookQuery} onSelectYear={selectYear} />
       </section>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

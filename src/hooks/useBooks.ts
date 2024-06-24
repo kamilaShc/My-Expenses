@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import APIClient from "../services/api-client";
-import { BookQuery } from "../App";
+import { searchQuery } from "../App";
 
 export interface Book {
   author_key: string[];
@@ -11,12 +11,18 @@ export interface Book {
   key: string;
 }
 
-const useBooks = (query: string) => {
-  const apiClient = new APIClient<Book>(query);
+const useBooks = (query: searchQuery) => {
+  const apiClient = new APIClient<Book>(query.baseString);
 
   return useQuery({
     queryKey: ["books", query],
-    queryFn: apiClient.getAll,
+    queryFn: () =>
+      apiClient.getAll({
+        params: {
+          q: query.q,
+          subject: query.subject,
+        },
+      }),
     staleTime: 1000 * 60 * 60,
   });
 };

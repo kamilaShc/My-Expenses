@@ -3,9 +3,10 @@ import useYears from "../hooks/useYears";
 
 interface Props {
   years: number[];
+  onSelectYear: (year: number) => void;
 }
 
-const FiltersPanel = ({ years }: Props) => {
+const FiltersPanel = ({ years, onSelectYear }: Props) => {
   return (
     <div className="filter-panel mb-3">
       <div className="dropdown">
@@ -21,7 +22,12 @@ const FiltersPanel = ({ years }: Props) => {
         </button>
         <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
           {years.map((year) => (
-            <a className="dropdown-item" href="#" key={year}>
+            <a
+              className="dropdown-item"
+              href="#"
+              key={year}
+              onClick={() => onSelectYear(year)}
+            >
               {year}
             </a>
           ))}
