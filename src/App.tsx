@@ -7,6 +7,7 @@ import "./scss/main.scss";
 import { useState } from "react";
 import FiltersPanel from "./components/FiltersPanel";
 import { getYears } from "./helpers/helpers";
+import Footer from "./components/Footer";
 
 const queryClient = new QueryClient();
 
@@ -40,16 +41,21 @@ export const App: React.FC = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Header />
-      <section className="main">
-        <Genres selected={selectedGenre} onSelectGenre={selectGenre} />
-        <div className="container">
-          <h2>{selectedGenre ? `${selectedGenre} Books` : "Trending books"}</h2>
-          <FiltersPanel years={getYears()} onSelectYear={selectYear} />
-          <BooksGrid query={bookQuery} onSelectYear={selectYear} />
-        </div>
-      </section>
-      <ReactQueryDevtools initialIsOpen={false} />
+      <div className="largeContainer">
+        <Header />
+        <main>
+          <Genres selected={selectedGenre} onSelectGenre={selectGenre} />
+          <div className="container">
+            <h2>
+              {selectedGenre ? `${selectedGenre} Books` : "Trending books"}
+            </h2>
+            <FiltersPanel years={getYears()} onSelectYear={selectYear} />
+            <BooksGrid query={bookQuery} onSelectYear={selectYear} />
+          </div>
+        </main>
+        <Footer />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </div>
     </QueryClientProvider>
   );
 };
