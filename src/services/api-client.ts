@@ -1,6 +1,8 @@
 import axios, { AxiosRequestConfig } from "axios";
 
 export interface FetchResponse<T> {
+  numFound: number;
+  start: number;
   query: string;
   docs?: T[];
   works?: T[];

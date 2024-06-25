@@ -1,39 +1,55 @@
+import React from "react";
 import { searchQuery } from "../App";
-import useBooks from "../hooks/useBooks";
-import useYears from "../hooks/useYears";
+import useBooks, { Book } from "../hooks/useBooks";
 import BookCard from "./BookCard";
-import FiltersPanel from "./FiltersPanel";
 
 interface Props {
   query: searchQuery;
   onSelectYear: (year: number) => void;
 }
 
+const renderBooks = (books: Book[]) => {
+  return books.map((book) => <BookCard book={book} key={book.key} />);
+};
+
 const BooksGrid = ({ query, onSelectYear }: Props) => {
-  const { data, isLoading, error } = useBooks(query);
+  const {
+    data,
+    isLoading,
+    error,
+    isFetchingNextPage,
+    fetchNextPage,
+    hasNextPage,
+  } = useBooks(query);
 
   if (isLoading) return <p>Loading...</p>;
 
   if (error) return <p>{error.message}</p>;
   console.log(data);
 
-  const books = query.baseString === "/search.json" ? data?.docs : data?.works;
-
   return (
     <>
-      <div className="container">
-        <h2>Trending books</h2>
-        {books && (
-          <FiltersPanel years={useYears(books)} onSelectYear={onSelectYear} />
+      <div className="row" style={{ margin: "auto" }}>
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          data?.pages.map((page, index) => (
+            <React.Fragment key={index}>
+              {query.baseString === "/search.json"
+                ? page.docs && renderBooks(page.docs)
+                : page.works && renderBooks(page.works)}
+            </React.Fragment>
+          ))
         )}
-        <div className="row" style={{ margin: "auto" }}>
-          {isLoading ? (
-            <p>Loading...</p>
-          ) : (
-            books?.map((book) => <BookCard book={book} />)
-          )}
-        </div>
       </div>
+      {hasNextPage && (
+        <button
+          className="btn btn-primary mt-3"
+          onClick={() => fetchNextPage()}
+        >
+          {isFetchingNextPage ? "Loading..." : "Load More"}
+        </button>
+      )}
     </>
   );
 };

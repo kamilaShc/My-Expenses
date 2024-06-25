@@ -5,6 +5,8 @@ import Genres from "./components/Genres";
 import Header from "./components/Header";
 import "./scss/main.scss";
 import { useState } from "react";
+import FiltersPanel from "./components/FiltersPanel";
+import { getYears } from "./helpers/helpers";
 
 const queryClient = new QueryClient();
 
@@ -41,8 +43,11 @@ export const App: React.FC = () => {
       <Header />
       <section className="main">
         <Genres selected={selectedGenre} onSelectGenre={selectGenre} />
-
-        <BooksGrid query={bookQuery} onSelectYear={selectYear} />
+        <div className="container">
+          <h2>{selectedGenre ? `${selectedGenre} Books` : "Trending books"}</h2>
+          <FiltersPanel years={getYears()} onSelectYear={selectYear} />
+          <BooksGrid query={bookQuery} onSelectYear={selectYear} />
+        </div>
       </section>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
