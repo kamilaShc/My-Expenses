@@ -2,6 +2,7 @@ import React from "react";
 import { searchQuery } from "../App";
 import useBooks, { Book } from "../hooks/useBooks";
 import BookCard from "./BookCard";
+import Spinner from "./Spinner";
 
 interface Props {
   query: searchQuery;
@@ -22,7 +23,12 @@ const BooksGrid = ({ query, onSelectYear }: Props) => {
     hasNextPage,
   } = useBooks(query);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading)
+    return (
+      <div className="spinner-container">
+        <Spinner />
+      </div>
+    );
 
   if (error) return <p>{error.message}</p>;
 
@@ -33,7 +39,7 @@ const BooksGrid = ({ query, onSelectYear }: Props) => {
           {data.pages[0].numFound && (
             <p>Results found: {data.pages[0].numFound.toLocaleString("lv")}</p>
           )}
-          <div className="row" style={{ margin: "auto" }}>
+          <div className="row mb-5" style={{ margin: "auto" }}>
             {isLoading ? (
               <p>Loading...</p>
             ) : (
@@ -46,14 +52,12 @@ const BooksGrid = ({ query, onSelectYear }: Props) => {
               ))
             )}
           </div>
-          {hasNextPage && (
-            <button
-              className="btn btn-primary mt-3"
-              onClick={() => fetchNextPage()}
-            >
-              {isFetchingNextPage ? "Loading..." : "Load More"}
+          {hasNextPage && !isFetchingNextPage && (
+            <button className="btn btn-primary" onClick={() => fetchNextPage()}>
+              Load more
             </button>
           )}
+          {isFetchingNextPage && <Spinner />}
         </>
       ) : (
         <p>Books not found</p>
