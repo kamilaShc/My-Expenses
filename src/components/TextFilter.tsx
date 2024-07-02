@@ -1,30 +1,23 @@
 import { useState } from "react";
 import { SEARCH_CRITERIAS } from "../constants";
-import { StringLiteral } from "typescript";
 
 interface Props {
   searchCriteria: string;
   setSearchCriteria: React.Dispatch<React.SetStateAction<string>>;
-  searchBooks: (searchText: string) => void;
   searchText: string;
   setSearchText: React.Dispatch<React.SetStateAction<string>>;
+  handleSearch: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
 const TextFilter = ({
   searchCriteria,
   setSearchCriteria,
-  searchBooks,
   searchText,
   setSearchText,
+  handleSearch,
 }: Props) => {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault;
-    searchBooks(searchText);
-    setSearchText("");
-  };
-
   return (
-    <form className="filter-text input-group" onSubmit={handleSubmit}>
+    <form className="filter-text input-group" onSubmit={handleSearch}>
       <input
         type="text"
         className="form-control"

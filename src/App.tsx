@@ -4,7 +4,7 @@ import BooksGrid from "./components/BooksGrid";
 import Genres from "./components/Genres";
 import Header from "./components/Header";
 import "./scss/main.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FiltersPanel from "./components/FiltersPanel";
 import { getYears } from "./helpers/helpers";
 import Footer from "./components/Footer";
@@ -29,6 +29,11 @@ export const App: React.FC = () => {
   const [selectedYear, setSelectedYear] = useState<number | null>(null);
   const [searchCriteria, setSearchCriteria] = useState<string>("Title");
   const [searchText, setSearchText] = useState<string>("");
+  const [title, setTitle] = useState<string>("Trending Books");
+
+  useEffect(() => {
+    if (selectedGenre) setTitle(`${selectedGenre} Books`);
+  }, [selectedGenre]);
 
   const selectGenre = (genre: string, key: string) => {
     setBookQuery({
@@ -68,10 +73,17 @@ export const App: React.FC = () => {
         break;
     }
     setBookQuery({
-      ...bookQuery,
+      subject: bookQuery.subject,
       ...newSearchQuery,
       baseString: "/search.json",
     });
+  };
+
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault;
+    searchBooks(searchText);
+    setTitle("Search results");
+    if (selectedGenre) setSelectedGenre(null);
   };
 
   return (
@@ -82,7 +94,8 @@ export const App: React.FC = () => {
           <Genres selected={selectedGenre} onSelectGenre={selectGenre} />
           <div className="container">
             <h2>
-              {selectedGenre ? `${selectedGenre} Books` : "Trending books"}
+              {title}
+              {/* {selectedGenre ? `${selectedGenre} Books` : "Trending books"} */}
             </h2>
             <FiltersPanel>
               <YearFilter
@@ -93,9 +106,9 @@ export const App: React.FC = () => {
               <TextFilter
                 searchCriteria={searchCriteria}
                 setSearchCriteria={setSearchCriteria}
-                searchBooks={searchBooks}
                 searchText={searchText}
                 setSearchText={setSearchText}
+                handleSearch={handleSearch}
               />
             </FiltersPanel>
             <BooksGrid query={bookQuery} onSelectYear={selectYear} />
