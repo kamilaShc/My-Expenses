@@ -1,5 +1,3 @@
-@import "_fonts-colors";
-
 h2 {
   margin-bottom: 20px;
 }
@@ -15,6 +13,10 @@ h2 {
 .card {
   width: 18rem;
 
+  p {
+    font-size: 0.8rem;
+  }
+
   .cover {
     display: flex;
     justify-content: center;
@@ -27,10 +29,10 @@ h2 {
 
   .card-title {
     margin: 10px 0 0;
-    color: $dark-text;
+    color: $secondary-color;
   }
 
   .card-text {
-    color: $grey-text;
+    color: $secondary-color;
   }
 }
