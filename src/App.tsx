@@ -8,6 +8,8 @@ import { useState } from "react";
 import FiltersPanel from "./components/FiltersPanel";
 import { getYears } from "./helpers/helpers";
 import Footer from "./components/Footer";
+import YearFilter from "./components/YearFilter";
+import TextFilter from "./components/TextFilter";
 
 const queryClient = new QueryClient();
 
@@ -15,6 +17,8 @@ export interface searchQuery {
   baseString: string;
   q?: string;
   subject?: string;
+  title?: string;
+  author?: string;
 }
 
 export const App: React.FC = () => {
@@ -22,6 +26,9 @@ export const App: React.FC = () => {
     baseString: "/trending/daily.json",
   });
   const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
+  const [selectedYear, setSelectedYear] = useState<number | null>(null);
+  const [searchCriteria, setSearchCriteria] = useState<string>("Title");
+  const [searchText, setSearchText] = useState<string>("");
 
   const selectGenre = (genre: string, key: string) => {
     setBookQuery({
@@ -29,6 +36,7 @@ export const App: React.FC = () => {
       subject: key,
     });
     setSelectedGenre(genre);
+    setSearchText("");
   };
 
   const selectYear = (year: number) => {
@@ -36,6 +44,33 @@ export const App: React.FC = () => {
       ...bookQuery,
       baseString: "/search.json",
       q: `first_publish_year:[${year} TO ${year + 1}]`,
+    });
+    setSearchText("");
+  };
+
+  const searchBooks = (searchText: string) => {
+    let newSearchQuery;
+    switch (searchCriteria) {
+      case "Title":
+        newSearchQuery = {
+          title: searchText,
+        };
+        break;
+      case "Author":
+        newSearchQuery = {
+          author: searchText,
+        };
+        break;
+      case "Subject":
+        newSearchQuery = {
+          subject: searchText,
+        };
+        break;
+    }
+    setBookQuery({
+      ...bookQuery,
+      ...newSearchQuery,
+      baseString: "/search.json",
     });
   };
 
@@ -49,7 +84,20 @@ export const App: React.FC = () => {
             <h2>
               {selectedGenre ? `${selectedGenre} Books` : "Trending books"}
             </h2>
-            <FiltersPanel years={getYears()} onSelectYear={selectYear} />
+            <FiltersPanel>
+              <YearFilter
+                selectedYear={selectedYear}
+                years={getYears()}
+                onSelectYear={selectYear}
+              />
+              <TextFilter
+                searchCriteria={searchCriteria}
+                setSearchCriteria={setSearchCriteria}
+                searchBooks={searchBooks}
+                searchText={searchText}
+                setSearchText={setSearchText}
+              />
+            </FiltersPanel>
             <BooksGrid query={bookQuery} onSelectYear={selectYear} />
           </div>
         </main>

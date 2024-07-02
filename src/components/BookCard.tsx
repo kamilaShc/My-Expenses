@@ -1,3 +1,4 @@
+import { validateAuthor, validateTitle } from "../helpers/helpers";
 import { Book } from "../hooks/useBooks";
 import coverNotFound from "../images/cover-not-found.jpg";
 
@@ -18,8 +19,12 @@ const BookCard = ({ book }: Props) => {
             }
           ></img>
         </a>
-        <h5 className="card-title">{book.title}</h5>
-        <p className="card-text">{book.author_name}</p>
+        <h5 className="card-title" title={book.title}>
+          {validateTitle(book.title)}
+        </h5>
+        <p className="card-text" title={book.author_name.toString()}>
+          {validateAuthor(book.author_name.toString())}
+        </p>
       </div>
     </div>
   );

@@ -1,4 +1,18 @@
+.filter-panel {
+  display: flex;
+  gap: 15px;
+
+  input,
+  button {
+    margin-right: 8px;
+  }
+}
+
 .dropdown-menu {
   max-height: 300px;
   overflow-y: scroll;
+}
+
+input {
+  max-width: 200px;
 }

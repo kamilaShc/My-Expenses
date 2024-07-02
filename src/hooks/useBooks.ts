@@ -21,6 +21,8 @@ const useBooks = (query: searchQuery) => {
         params: {
           q: query.q,
           subject: query.subject,
+          title: query.title,
+          author: query.author,
           limit: 20,
           page: pageParam,
         },

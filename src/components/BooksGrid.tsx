@@ -25,30 +25,38 @@ const BooksGrid = ({ query, onSelectYear }: Props) => {
   if (isLoading) return <p>Loading...</p>;
 
   if (error) return <p>{error.message}</p>;
-  console.log(data);
 
   return (
     <>
-      <div className="row" style={{ margin: "auto" }}>
-        {isLoading ? (
-          <p>Loading...</p>
-        ) : (
-          data?.pages.map((page, index) => (
-            <React.Fragment key={index}>
-              {query.baseString === "/search.json"
-                ? page.docs && renderBooks(page.docs)
-                : page.works && renderBooks(page.works)}
-            </React.Fragment>
-          ))
-        )}
-      </div>
-      {hasNextPage && (
-        <button
-          className="btn btn-primary mt-3"
-          onClick={() => fetchNextPage()}
-        >
-          {isFetchingNextPage ? "Loading..." : "Load More"}
-        </button>
+      {data && (data.pages[0].numFound > 0 || data.pages[0].works) ? (
+        <>
+          {data.pages[0].numFound && (
+            <p>Results found: {data.pages[0].numFound.toLocaleString("lv")}</p>
+          )}
+          <div className="row" style={{ margin: "auto" }}>
+            {isLoading ? (
+              <p>Loading...</p>
+            ) : (
+              data.pages.map((page, index) => (
+                <React.Fragment key={index}>
+                  {query.baseString === "/search.json"
+                    ? page.docs && renderBooks(page.docs)
+                    : page.works && renderBooks(page.works)}
+                </React.Fragment>
+              ))
+            )}
+          </div>
+          {hasNextPage && (
+            <button
+              className="btn btn-primary mt-3"
+              onClick={() => fetchNextPage()}
+            >
+              {isFetchingNextPage ? "Loading..." : "Load More"}
+            </button>
+          )}
+        </>
+      ) : (
+        <p>Books not found</p>
       )}
     </>
   );
