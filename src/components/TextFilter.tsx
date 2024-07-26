@@ -20,8 +20,6 @@ const TextFilter = ({
   const inputRef = useRef(null);
 
   const handleOutsideClick = (event: MouseEvent) => {
-    console.log(event);
-    console.log(inputRef.current);
     if (event.target !== inputRef.current) {
       setWasValidated(false);
     }
@@ -34,7 +32,6 @@ const TextFilter = ({
       event.preventDefault();
       event.stopPropagation();
       setWasValidated(true);
-      console.log("was validated");
       return;
     }
 
@@ -46,7 +43,6 @@ const TextFilter = ({
     document.addEventListener("mousedown", handleOutsideClick);
   }, []);
 
-  console.log("rendered");
   return (
     <form
       className={`filter-text ${wasValidated ? `was-validated` : ""}`}
