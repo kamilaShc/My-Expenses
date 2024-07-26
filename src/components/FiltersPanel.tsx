@@ -5,7 +5,7 @@ interface Props {
 }
 
 const FiltersPanel = ({ children }: Props) => {
-  return <div className="filter-panel mb-3">{children}</div>;
+  return <div className="filter-container">{children}</div>;
 };
 
 export default FiltersPanel;

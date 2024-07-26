@@ -39,7 +39,7 @@ const BooksGrid = ({ query, onSelectYear }: Props) => {
           {data.pages[0].numFound && (
             <p>Results found: {data.pages[0].numFound.toLocaleString("lv")}</p>
           )}
-          <div className="row mb-5" style={{ margin: "auto" }}>
+          <div className="books-grid row mb-5" style={{ margin: "auto" }}>
             {isLoading ? (
               <p>Loading...</p>
             ) : (

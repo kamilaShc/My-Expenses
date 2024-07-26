@@ -8,6 +8,14 @@
   box-sizing: border-box;
 }
 
+// body {
+//   position: absolute;
+// }
+
+.wrapper {
+  overflow-x: hidden;
+}
+
 .largeContainer {
   display: flex;
   flex-direction: column;
@@ -40,4 +48,28 @@ footer {
 
 h2 {
   color: $secondary-color;
+}
+
+.pos-f-t {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .genres {
+    display: none;
+  }
+
+  .pos-f-t {
+    display: block;
+    margin-right: 5px;
+  }
+
+  main {
+    margin: 0 10px;
+    flex-wrap: wrap;
+  }
+
+  header {
+    margin-bottom: 10px;
+  }
 }

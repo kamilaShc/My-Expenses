@@ -10,20 +10,24 @@ const BookCard = ({ book }: Props) => {
   return (
     <div className="card" key={book.key}>
       <div className="card-body">
-        <a className="cover">
+        <div className="cover">
           <img
             src={
               book.cover_edition_key
                 ? `http://covers.openlibrary.org/b/olid/${book.cover_edition_key}.jpg`
                 : coverNotFound
             }
-          ></img>
-        </a>
+            className="cover-img"
+          />
+        </div>
         <h5 className="card-title" title={book.title}>
           {validateTitle(book.title)}
         </h5>
-        <p className="card-text" title={book.author_name.toString()}>
-          {validateAuthor(book.author_name.toString())}
+        <p
+          className="card-text"
+          title={book.author_name ? book.author_name.toString() : ""}
+        >
+          {book.author_name && validateAuthor(book.author_name.toString())}
         </p>
       </div>
     </div>

@@ -10,6 +10,7 @@ import { getYears } from "./helpers/helpers";
 import Footer from "./components/Footer";
 import YearFilter from "./components/YearFilter";
 import TextFilter from "./components/TextFilter";
+import { NavBar } from "./components/NavBar";
 
 const queryClient = new QueryClient();
 
@@ -90,7 +91,9 @@ export const App: React.FC = () => {
     <QueryClientProvider client={queryClient}>
       <div className="largeContainer">
         <Header />
+
         <main>
+          <NavBar />
           <Genres selected={selectedGenre} onSelectGenre={selectGenre} />
           <div className="container">
             <h2>

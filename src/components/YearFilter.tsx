@@ -6,7 +6,7 @@ interface Props {
 
 const YearFilter = ({ years, onSelectYear, selectedYear }: Props) => {
   return (
-    <div className="dropdown">
+    <div className="dropdown me-3 mb-2">
       <button
         className="btn btn-primary dropdown-toggle"
         type="button"

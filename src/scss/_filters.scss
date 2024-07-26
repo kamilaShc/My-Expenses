@@ -1,11 +1,17 @@
-.filter-panel {
+.filter-container {
   display: flex;
-  gap: 15px;
+  flex-direction: row;
+}
 
-  input,
-  button {
-    margin-right: 8px;
-  }
+.filter-text {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  flex-wrap: wrap;
+}
+
+input {
+  max-width: 200px;
 }
 
 .dropdown-menu {
@@ -13,6 +19,8 @@
   overflow-y: scroll;
 }
 
-input {
-  max-width: 200px;
+@media (max-width: 300px) {
+  .filter-container {
+    flex-direction: column;
+  }
 }

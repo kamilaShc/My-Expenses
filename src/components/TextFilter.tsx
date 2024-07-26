@@ -17,17 +17,18 @@ const TextFilter = ({
   handleSearch,
 }: Props) => {
   return (
-    <form className="filter-text input-group" onSubmit={handleSearch}>
+    <form className="filter-text" onSubmit={handleSearch} noValidate>
       <input
         type="text"
-        className="form-control"
+        className="form-control me-2 mb-2"
         aria-label="Search text"
         placeholder="Sherlock Holmes"
         value={searchText}
         onChange={(e) => setSearchText(e.target.value)}
         required
       />
-      <div className="input-group-append">
+      <div className="invalid-feedback">Please provide a valid input.</div>
+      <div className="input-group-append me-3 mb-2">
         <button
           className="btn btn-primary dropdown-toggle"
           type="button"
@@ -51,7 +52,7 @@ const TextFilter = ({
         </div>
       </div>
       <button
-        className="btn btn-primary"
+        className="btn btn-primary mb-3"
         type="submit"
         aria-haspopup="true"
         aria-expanded="false"
