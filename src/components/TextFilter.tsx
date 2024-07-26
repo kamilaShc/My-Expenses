@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SEARCH_CRITERIAS } from "../constants";
 
 interface Props {
@@ -16,18 +16,56 @@ const TextFilter = ({
   setSearchText,
   handleSearch,
 }: Props) => {
+  const [wasValidated, setWasValidated] = useState<boolean>(false);
+  const inputRef = useRef(null);
+
+  const handleOutsideClick = (event: MouseEvent) => {
+    console.log(event);
+    console.log(inputRef.current);
+    if (event.target !== inputRef.current) {
+      setWasValidated(false);
+    }
+  };
+
+  const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
+    const form: HTMLFormElement = event.currentTarget;
+
+    if (!form.checkValidity()) {
+      event.preventDefault();
+      event.stopPropagation();
+      setWasValidated(true);
+      console.log("was validated");
+      return;
+    }
+
+    setWasValidated(false);
+    handleSearch(event);
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleOutsideClick);
+  }, []);
+
+  console.log("rendered");
   return (
-    <form className="filter-text" onSubmit={handleSearch} noValidate>
-      <input
-        type="text"
-        className="form-control me-2 mb-2"
-        aria-label="Search text"
-        placeholder="Sherlock Holmes"
-        value={searchText}
-        onChange={(e) => setSearchText(e.target.value)}
-        required
-      />
-      <div className="invalid-feedback">Please provide a valid input.</div>
+    <form
+      className={`filter-text ${wasValidated ? `was-validated` : ""}`}
+      onSubmit={submitForm}
+      noValidate
+    >
+      <div className="me-2 mb-2">
+        <input
+          ref={inputRef}
+          type="text"
+          className="form-control"
+          aria-label="Search text"
+          placeholder="Sherlock Holmes"
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+          required
+        />
+        <div className="invalid-feedback">What would you like to search?</div>
+      </div>
       <div className="input-group-append me-3 mb-2">
         <button
           className="btn btn-primary dropdown-toggle"
