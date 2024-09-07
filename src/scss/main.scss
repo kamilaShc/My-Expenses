@@ -1,75 +1,27 @@
-@import "_fonts-colors";
+@import "custom";
 @import "~bootstrap/scss/bootstrap";
-@import "_cards";
-@import "_genres";
-@import "_filters";
 
 * {
   box-sizing: border-box;
 }
 
-// body {
-//   position: absolute;
-// }
-
-.wrapper {
-  overflow-x: hidden;
-}
-
-.largeContainer {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-main {
-  flex: 1;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin: 0 60px;
-}
-
-header {
-  @include decorative-font;
-  background-color: $primary-color;
-  color: $secondary-color;
-  margin-bottom: 30px;
-  padding: 30px;
-  text-align: center;
-}
-
-footer {
-  margin-top: 60px;
-  padding: 60px;
-  text-align: center;
-  background-color: $primary-color;
-}
-
-h2 {
-  color: $secondary-color;
-}
-
-.pos-f-t {
-  display: none;
-}
-
-@media (max-width: 700px) {
-  .genres {
-    display: none;
+.login-page-form {
+  margin: 20vh auto;
+  max-width: 600px;
+  h3 {
+    margin-bottom: 1rem;
+    text-align: center;
   }
 
-  .pos-f-t {
-    display: block;
-    margin-right: 5px;
+  label {
+    margin-bottom: 0.5rem;
   }
 
-  main {
-    margin: 0 10px;
-    flex-wrap: wrap;
+  .form-group {
+    margin-bottom: 0.7rem;
   }
 
-  header {
-    margin-bottom: 10px;
+  .form-group:last-of-type {
+    margin-bottom: 1.2rem;
   }
 }

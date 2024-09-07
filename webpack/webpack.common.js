@@ -1,6 +1,8 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 const devMode = process.env.NODE_ENV !== "production";
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   entry: path.resolve(__dirname, "..", "./src/index.tsx"),
@@ -31,29 +33,11 @@ module.exports = {
         type: "asset/inline",
       },
       {
-        test: /\.(scss)$/,
+        test: /\.scss$/,
         use: [
-          devMode ? "style-loader" : MiniCssExtractPlugin.loader,
-          {
-            loader: "style-loader",
-            options: {
-              esModule: false,
-            },
-          },
-          {
-            loader: "css-loader",
-          },
-          {
-            loader: "postcss-loader",
-            options: {
-              postcssOptions: {
-                plugins: () => [require("autoprefixer")],
-              },
-            },
-          },
-          {
-            loader: "sass-loader",
-          },
+          MiniCssExtractPlugin.loader, // Extracts CSS into files
+          "css-loader",
+          "sass-loader",
         ],
       },
     ],
@@ -62,9 +46,23 @@ module.exports = {
     path: path.resolve(__dirname, "..", "./build"),
     filename: "bundle.js",
   },
+  devServer: {
+    historyApiFallback: true,
+  },
   plugins: [
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, "..", "src", "theming-kit.html"),
+          to: "",
+        },
+      ],
+    }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "..", "./src/index.html"),
+    }),
+    new MiniCssExtractPlugin({
+      filename: "styles.css",
     }),
   ],
   stats: "errors-only",

@@ -1,34 +1,36 @@
-import genres from "../data/genres";
+import { useLocation, useNavigate } from "react-router-dom";
 
-export const NavBar = () => {
+interface Props {
+  showRegister: boolean;
+  setShowRegister: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const Navbar = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  let buttonText = "Register";
+
+  switch (location.pathname) {
+    case "/register":
+      buttonText = "Login";
+  }
+
   return (
-    <div className="pos-f-t">
-      <nav className="navbar">
+    <>
+      <nav className="navbar navbar-expand-lg bg-primary justify-content-between">
+        <a className="navbar-brand" href="#">
+          MyExpenses
+        </a>
         <button
-          className="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarToggleExternalContent"
-          aria-controls="navbarToggleExternalContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
+          className="btn btn-secondary"
+          onClick={() =>
+            buttonText === "Login" ? navigate("/") : navigate("/register")
+          }
         >
-          <span className="navbar-toggler-icon"></span>
+          {buttonText}
         </button>
       </nav>
-      <div className="collapse" id="navbarToggleExternalContent">
-        <div className="list-group mb-3">
-          {genres.map((genre) => (
-            <a
-              className={`list-group-item list-group-item-action`}
-              key={genre.key}
-              //   onClick={() => onSelectGenre(genre.name, genre.key)}
-            >
-              {genre.name}
-            </a>
-          ))}
-        </div>
-      </div>
-    </div>
+    </>
   );
 };
