@@ -6,15 +6,15 @@ interface AuthContextType {
   setAuth: React.Dispatch<React.SetStateAction<{}>>;
 }
 
+interface Auth {
+  username?: string;
+  accessToken?: string;
+}
+
 const AuthContext = React.createContext<AuthContextType>({} as AuthContextType);
 
 interface Props {
   children: ReactNode;
-}
-
-interface Auth {
-  username?: string;
-  accessToken?: string;
 }
 
 export const AuthProvider = ({ children }: Props) => {

@@ -1,12 +1,17 @@
+import AddExpenseBtn from "../components/AddExpenseBtn";
+import ExpensesList from "../components/ExpensesList";
+
 function Homepage() {
   return (
-    <section>
-      <h1>You are logged in!</h1>
-      <br />
-      <p>
-        <a href="#">Go to Home</a>
-      </p>
-    </section>
+    <main className="container mt-5">
+      <div className="row">
+        <div className="col-lg">
+          <AddExpenseBtn />
+          <ExpensesList />
+        </div>
+        <div className="col-lg"></div>
+      </div>
+    </main>
   );
 }
 

@@ -18,14 +18,18 @@ const router = createBrowserRouter([
         path: "register",
         element: <RegisterPage />,
       },
+      // {
+      //   element: <PrivateRoutes />,
+      //   children: [
+      //     {
+      //       path: "homepage",
+      //       element: <Homepage />,
+      //     },
+      //   ],
+      // },
       {
-        element: <PrivateRoutes />,
-        children: [
-          {
-            path: "homepage",
-            element: <Homepage />,
-          },
-        ],
+        path: "homepage",
+        element: <Homepage />,
       },
     ],
   },

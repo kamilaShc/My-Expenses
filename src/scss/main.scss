@@ -1,8 +1,20 @@
 @import "custom";
 @import "~bootstrap/scss/bootstrap";
+@import url("../../node_modules/bootstrap-icons/font/bootstrap-icons.css");
 
 * {
   box-sizing: border-box;
+}
+
+h6,
+p {
+  margin: 0;
+}
+
+h5 {
+  color: $primary;
+  font-weight: 600;
+  font-size: 1.1rem;
 }
 
 .login-page-form {
@@ -24,4 +36,9 @@
   .form-group:last-of-type {
     margin-bottom: 1.2rem;
   }
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
 }

@@ -1,9 +1,12 @@
 import { useFormik } from "formik";
 import { useEffect, useRef, useState } from "react";
 import useAuth from "../hooks/useAuth";
-
 import axios from "../api/axios";
 import { useNavigate } from "react-router-dom";
+import login from "../login";
+import useExpenses from "../hooks/useExpenses";
+import { expensesData } from "../data";
+
 const LOGIN_URL = "/login";
 
 interface LoginFormValues {
@@ -24,9 +27,11 @@ const validate = (values: LoginFormValues) => {
 
 export const LoginForm = () => {
   const { setAuth } = useAuth();
+  const { setExpenses } = useExpenses();
+
   const userRef = useRef<HTMLInputElement | null>(null);
   const [errMsg, setErrMsg] = useState("");
-  // const [success, setSuccess] = useState(false);
+
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -51,6 +56,7 @@ export const LoginForm = () => {
   }, [formik.values.username, formik.values.password]);
 
   const handleSubmit = async () => {
+    // login(formik.values.username, formik.values.password);
     try {
       const { username, password } = formik.values;
       const response = await axios.post(
@@ -66,8 +72,11 @@ export const LoginForm = () => {
       );
       const accessToken = response?.data?.accessToken;
       setAuth({ username, password, accessToken });
+      setExpenses(
+        () =>
+          expensesData.find((data) => data.user == username)?.expenses || null
+      );
       navigate("/homepage");
-      // setSuccess(true);
     } catch (err: { response?: string } | any) {
       if (!err?.response) {
         setErrMsg("No server response");

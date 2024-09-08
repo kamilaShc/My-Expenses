@@ -2,6 +2,7 @@ import ReactDOM from "react-dom/client";
 import React from "react";
 import { App } from "./App";
 import { AuthProvider } from "./context/AuthProvider";
+import ExpensesProvider from "./context/ExpensesProvider";
 
 const rootElement = document.getElementById("root");
 if (!rootElement) throw new Error("Failed to find the root element");
@@ -17,7 +18,9 @@ if (!PUBLISHABLE_KEY) {
 root.render(
   <React.StrictMode>
     <AuthProvider>
-      <App />
+      <ExpensesProvider>
+        <App />
+      </ExpensesProvider>
     </AuthProvider>
   </React.StrictMode>
 );
